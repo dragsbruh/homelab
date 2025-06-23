@@ -7,6 +7,7 @@ services:
     basePath: /tea
     target:
       origin: http://waifutea-net:3000
+    enforceTrailingSlash: true
 
   - name: portainer
     basePath: /portainer

@@ -42,8 +42,6 @@ services:
   proxii:
     image: waifuproxii:latest
     container_name: proxii
-    environment:
-      - DATABASE_URL=file:///meow.db
     ports:
       - "9000:3000"
     volumes:
