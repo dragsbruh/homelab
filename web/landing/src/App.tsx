@@ -5,7 +5,7 @@ const services = [
     name: "waifutea",
     description:
       "kawaii git hosting!! (registrations are closed currently, hmu if you need an account smh)",
-    icon: "https://waifustation.miku-royal.ts.net/tea/assets/img/logo.svg",
+    icon: "/tea/assets/img/logo.svg",
     url: "/tea",
   },
   {

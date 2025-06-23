@@ -6,7 +6,7 @@ services:
     container_name: waifutea
     ports:
       - "2222:22"
-      # - "5050:3000" # for initial setup
+      - "5050:3000" # for initial setup
     volumes:
       - ./data/waifutea:/data:Z
     networks:
@@ -60,7 +60,7 @@ services:
     volumes:
       - ${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock:Z
       - ./data/portainer:/data:Z
-    command: --base-url /portainer/
+    command: --base-url=/portainer/
     networks:
       default:
         aliases:
