@@ -8,7 +8,7 @@ services:
       - "2222:22"
       # - "5050:3000" # for initial setup
     volumes:
-      - waifutea-data:/data
+      - ./data/waifutea:/data:Z
     networks:
       default:
         aliases:
@@ -48,7 +48,6 @@ services:
       - "9000:3000"
     volumes:
       - ./config/proxii.yml:/app/proxii.yml
-      - ./data/proxii/analytics.db:/meow.db:Z
       - ./web/public:/web/public:Z
     networks:
       default:
@@ -60,16 +59,12 @@ services:
     container_name: portainer
     volumes:
       - ${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock:Z
-      - portainer-data:/data
+      - ./data/portainer:/data:Z
     command: --base-url /portainer/
     networks:
       default:
         aliases:
           - portainer-net
-
-volumes:
-  waifutea-data:
-  portainer-data:
 
 networks:
   default:
