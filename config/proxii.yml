@@ -1,0 +1,21 @@
+port: 3000
+
+publicDir: /web/public
+
+services:
+  - name: gitea
+    basePath: /tea
+    target:
+      origin: http://waifutea-net:3000
+
+  - name: portainer
+    basePath: /portainer
+    target:
+      origin: http://portainer-net:9000
+    enforceTrailingSlash: true
+
+  - name: portainer locales
+    basePath: /locales
+    target:
+      origin: http://portainer-net:9000
+    trimBase: false
