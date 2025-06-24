@@ -64,6 +64,23 @@ services:
         aliases:
           - portainer-net
 
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARED_TOKEN}
+
+  #uptime-kuma:
+  #  container_name: uptime_kuma
+  #  image: louislam/uptime-kuma:1
+  #  volumes:
+  #    - ./data/uptime-kuma:/app/data
+  #  restart: unless-stopped
+  #  ports:
+  #    - 3001:3001
+
 networks:
   default:
     name: waifunet
