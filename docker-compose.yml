@@ -4,9 +4,10 @@ services:
   gitea:
     image: docker.io/gitea/gitea:latest
     container_name: waifutea
+    restart: unless-stopped
     ports:
       - "2222:22"
-      - "5050:3000" # for initial setup
+      # - "5050:3000" # for initial setup
     volumes:
       - ./data/waifutea:/data:Z
     networks:
@@ -17,6 +18,7 @@ services:
   act_runner:
     image: gitea/act_runner:nightly
     container_name: waifutea-act-runner
+    restart: unless-stopped
     environment:
       - CONFIG_FILE=/config.yml
       - GITEA_INSTANCE_URL=http://waifutea-net:3000/
@@ -42,6 +44,7 @@ services:
   proxii:
     image: waifuproxii:latest
     container_name: proxii
+    restart: unless-stopped
     ports:
       - "9000:3000"
     volumes:
@@ -52,17 +55,18 @@ services:
         aliases:
           - proxii-net
 
-  portainer:
-    image: portainer-ce:latest
-    container_name: portainer
-    volumes:
-      - ${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock:Z
-      - ./data/portainer:/data:Z
-    command: --base-url=/portainer/
-    networks:
-      default:
-        aliases:
-          - portainer-net
+  # portainer:
+  #   image: portainer-ce:latest
+  #   container_name: portainer
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock:Z
+  #     - ./data/portainer:/data:Z
+  #   command: --base-url=/portainer/
+  #   networks:
+  #     default:
+  #       aliases:
+  #         - portainer-net
 
   cloudflared:
     image: cloudflare/cloudflared:latest
@@ -72,14 +76,19 @@ services:
     environment:
       - TUNNEL_TOKEN=${CLOUDFLARED_TOKEN}
 
-  #uptime-kuma:
-  #  container_name: uptime_kuma
-  #  image: louislam/uptime-kuma:1
-  #  volumes:
-  #    - ./data/uptime-kuma:/app/data
-  #  restart: unless-stopped
-  #  ports:
-  #    - 3001:3001
+  glance:
+    container_name: glance
+    image: glanceapp/glance
+    restart: unless-stopped
+    environment:
+      - GLANCE_GITHUB_TOKEN=${GLANCE_GITHUB_TOKEN}
+      - GLANCE_LOCATION=${GLANCE_LOCATION}
+    volumes:
+      - ./config/glance.yml:/app/config/glance.yml:Z
+    networks:
+      default:
+        aliases:
+          - glance-net
 
 networks:
   default:

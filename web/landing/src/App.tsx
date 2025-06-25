@@ -1,19 +1,23 @@
 import { For } from "solid-js";
 
-const services = [
+const services: {
+  name: string,
+  description: string,
+  icon: string,
+  url: string
+}[] = [
+  {
+    name: "glance",
+    description: "super cool home page smh",
+    icon: "/glance.svg",
+    url: "/glance/",
+  },
   {
     name: "waifutea",
     description:
       "kawaii git hosting!! (registrations are closed currently, hmu if you need an account smh)",
     icon: "/tea/assets/img/logo.svg",
     url: "/tea",
-  },
-  {
-    name: "portainer",
-    description:
-      "chad docker ui (that i use for podman), totally super secure that i can expose it to the internet, right?",
-    icon: "/portainer.png",
-    url: "/portainer/",
   },
 ];
 

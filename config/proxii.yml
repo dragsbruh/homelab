@@ -20,3 +20,10 @@ services:
     target:
       origin: http://portainer-net:9000
     trimBase: false
+
+  - name: glance
+    basePath: /glance
+    target:
+      origin: http://glance-net:8080
+    enforceTrailingSlash: true
+
