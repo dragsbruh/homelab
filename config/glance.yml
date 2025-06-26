@@ -1,5 +1,4 @@
 server:
-  base-url: /glance/
   proxied: true
 
 pages:

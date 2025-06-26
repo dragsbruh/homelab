@@ -1,23 +1,29 @@
 import { For } from "solid-js";
 
 const services: {
-  name: string,
-  description: string,
-  icon: string,
-  url: string
+  name: string;
+  description: string;
+  icon: string;
+  url: string;
 }[] = [
   {
     name: "glance",
     description: "super cool home page smh",
     icon: "/glance.svg",
-    url: "/glance/",
+    url: "https://glance.vinster.xyz",
   },
   {
     name: "waifutea",
     description:
       "kawaii git hosting!! (registrations are closed currently, hmu if you need an account smh)",
     icon: "/tea/assets/img/logo.svg",
-    url: "/tea",
+    url: "https://git.vinster.xyz",
+  },
+  {
+    name: "uptime",
+    description: "see the incredible uptime of this incredible homelab!!!1!",
+    icon: "/kuma.svg",
+    url: "https://uptime.vinster.xyz/status/postmiku",
   },
 ];
 

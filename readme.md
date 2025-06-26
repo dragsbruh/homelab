@@ -1,21 +1,23 @@
-# ports usage tracking
+# homelab
 
-## prod
+## ports usage tracking
+
+### prod
 
 - 9000
   used for proxii
 
-## internals (still prod)
+### internals (still prod)
 
 - 7088
   used for waifutea act runner cache
 
-## testing
+### testing
 
 - 5050 (unused atm, but reserved)
   waifutea (for setup)
 
-## private
+### private
 
 - 2222
   waifutea git ssh

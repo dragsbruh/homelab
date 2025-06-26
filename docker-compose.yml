@@ -45,28 +45,26 @@ services:
     image: waifuproxii:latest
     container_name: proxii
     restart: unless-stopped
-    ports:
-      - "9000:3000"
     volumes:
       - ./config/proxii.yml:/app/proxii.yml
       - ./web/public:/web/public:Z
     networks:
       default:
         aliases:
-          - proxii-net
+          - proxy-net
 
-  # portainer:
-  #   image: portainer-ce:latest
-  #   container_name: portainer
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock:Z
-  #     - ./data/portainer:/data:Z
-  #   command: --base-url=/portainer/
-  #   networks:
-  #     default:
-  #       aliases:
-  #         - portainer-net
+  portainer:
+    image: portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    volumes:
+      - ${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock:Z
+      - ./data/portainer:/data:Z
+    command: --base-url=/portainer/
+    networks:
+      default:
+        aliases:
+          - portainer-net
 
   cloudflared:
     image: cloudflare/cloudflared:latest
@@ -89,6 +87,17 @@ services:
       default:
         aliases:
           - glance-net
+
+  uptime-kuma:
+    container_name: uptime_kuma
+    image: louislam/uptime-kuma:1
+    volumes:
+      - ./data/uptime-kuma:/app/data
+    restart: unless-stopped
+    networks:
+      default:
+        aliases:
+          - kuma-net
 
 networks:
   default:
