@@ -3,68 +3,17 @@ version: "3.8"
 services:
   gitea:
     image: docker.io/gitea/gitea:latest
-    container_name: waifutea
+    container_name: gitea
     restart: unless-stopped
     ports:
       - "2222:22"
       # - "5050:3000" # for initial setup
     volumes:
-      - ./data/waifutea:/data:Z
+      - ./data/gitea:/data:Z
     networks:
-      default:
+      waifunet:
         aliases:
           - waifutea-net
-
-  act_runner:
-    image: gitea/act_runner:nightly
-    container_name: waifutea-act-runner
-    restart: unless-stopped
-    environment:
-      - CONFIG_FILE=/config.yml
-      - GITEA_INSTANCE_URL=http://waifutea-net:3000/
-      - GITEA_RUNNER_REGISTRATION_TOKEN=${REGISTRATION_TOKEN}
-      - GITEA_RUNNER_NAME=waifumustact
-    volumes:
-      - ${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock:Z
-      - ./config/act-runner.yml:/config.yml:Z
-      - ./data/act:/data:Z
-      - ./scripts/act_init.sh:/init.sh:Z
-    depends_on:
-      - gitea
-    security_opt:
-      - label=disable
-    ports:
-      - "7088:7088" # cache
-    networks:
-      default:
-        aliases:
-          - waifutea-act-runner-net
-    entrypoint: ["/sbin/tini", "--", "/init.sh"] # skips registration if registered
-
-  proxii:
-    image: waifuproxii:latest
-    container_name: proxii
-    restart: unless-stopped
-    volumes:
-      - ./config/proxii.yml:/app/proxii.yml
-      - ./web/public:/web/public:Z
-    networks:
-      default:
-        aliases:
-          - proxy-net
-
-  portainer:
-    image: portainer-ce:latest
-    container_name: portainer
-    restart: unless-stopped
-    volumes:
-      - ${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock:Z
-      - ./data/portainer:/data:Z
-    command: --base-url=/portainer/
-    networks:
-      default:
-        aliases:
-          - portainer-net
 
   cloudflared:
     image: cloudflare/cloudflared:latest
@@ -73,6 +22,32 @@ services:
     command: tunnel run
     environment:
       - TUNNEL_TOKEN=${CLOUDFLARED_TOKEN}
+
+  gitea_act_runner:
+    image: gitea/act_runner:nightly
+    container_name: gitea-act-runner
+    restart: unless-stopped
+    environment:
+      - CONFIG_FILE=/config.yml
+      - GITEA_INSTANCE_URL=http://waifutea-net:3000/
+      - GITEA_RUNNER_REGISTRATION_TOKEN=${REGISTRATION_TOKEN}
+      - GITEA_RUNNER_NAME=waifumustact
+    volumes:
+      - ${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock:Z
+      - ./config/gitea-act-runner.yml:/config.yml:Z
+      - ./data/gitea-act-runner:/data:Z
+      - ./scripts/act_init.sh:/init.sh:Z
+    depends_on:
+      - gitea
+    security_opt:
+      - label=disable
+    ports:
+      - "7088:7088" # cache
+    networks:
+      waifunet:
+        aliases:
+          - waifutea-act-runner-net
+    entrypoint: ["/sbin/tini", "--", "/init.sh"] # skips registration if registered
 
   glance:
     container_name: glance
@@ -84,21 +59,46 @@ services:
     volumes:
       - ./config/glance.yml:/app/config/glance.yml:Z
     networks:
-      default:
+      waifunet:
         aliases:
           - glance-net
+
+  portainer:
+    image: portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    volumes:
+      - ${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock:Z
+      - ./data/portainer:/data:Z
+    command: --base-url=/portainer/
+    networks:
+      waifunet:
+        aliases:
+          - portainer-net
+
+  proxii:
+    image: waifuproxii:latest
+    container_name: proxii
+    restart: unless-stopped
+    volumes:
+      - ./config/proxii.yml:/app/proxii.yml:Z
+      - ./web/public:/web/public:Z
+    networks:
+      waifunet:
+        aliases:
+          - proxy-net
 
   uptime-kuma:
     container_name: uptime_kuma
     image: louislam/uptime-kuma:1
     volumes:
-      - ./data/uptime-kuma:/app/data
+      - ./data/uptime-kuma:/app/data:Z
     restart: unless-stopped
     networks:
-      default:
+      waifunet:
         aliases:
           - kuma-net
 
 networks:
-  default:
+  waifunet:
     name: waifunet
