@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   gitea:
     image: docker.io/gitea/gitea:latest
@@ -9,7 +7,7 @@ services:
       - "2222:22"
       # - "5050:3000" # for initial setup
     volumes:
-      - ./data/gitea:/data:Z
+      - ./data/gitea:/data
     networks:
       waifunet:
         aliases:
@@ -22,6 +20,10 @@ services:
     command: tunnel run
     environment:
       - TUNNEL_TOKEN=${CLOUDFLARED_TOKEN}
+    networks:
+      waifunet:
+        aliases:
+          - cloudflared-net
 
   gitea_act_runner:
     image: gitea/act_runner:nightly
@@ -33,10 +35,10 @@ services:
       - GITEA_RUNNER_REGISTRATION_TOKEN=${REGISTRATION_TOKEN}
       - GITEA_RUNNER_NAME=waifumustact
     volumes:
-      - ${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock:Z
-      - ./config/gitea-act-runner.yml:/config.yml:Z
-      - ./data/gitea-act-runner:/data:Z
-      - ./scripts/act_init.sh:/init.sh:Z
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./config/gitea-act-runner.yml:/config.yml
+      - ./data/gitea-act-runner:/data
+      - ./scripts/act_init.sh:/init.sh
     depends_on:
       - gitea
     security_opt:
@@ -51,25 +53,25 @@ services:
 
   glance:
     container_name: glance
-    image: glanceapp/glance
+    image: glanceapp/glance:latest
     restart: unless-stopped
     environment:
       - GLANCE_GITHUB_TOKEN=${GLANCE_GITHUB_TOKEN}
       - GLANCE_LOCATION=${GLANCE_LOCATION}
     volumes:
-      - ./config/glance.yml:/app/config/glance.yml:Z
+      - ./config/glance.yml:/app/config/glance.yml
     networks:
       waifunet:
         aliases:
           - glance-net
 
   portainer:
-    image: portainer-ce:latest
+    image: portainer/portainer-ce:latest
     container_name: portainer
     restart: unless-stopped
     volumes:
-      - ${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock:Z
-      - ./data/portainer:/data:Z
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data/portainer:/data
     command: --base-url=/portainer/
     networks:
       waifunet:
@@ -77,12 +79,12 @@ services:
           - portainer-net
 
   proxii:
-    image: waifuproxii:latest
+    image: proxii:latest
     container_name: proxii
     restart: unless-stopped
     volumes:
-      - ./config/proxii.yml:/app/proxii.yml:Z
-      - ./web/public:/web/public:Z
+      - ./config/proxii.yml:/app/proxii.yml
+      - ./web/public:/web/public
     networks:
       waifunet:
         aliases:
@@ -92,7 +94,7 @@ services:
     container_name: uptime_kuma
     image: louislam/uptime-kuma:1
     volumes:
-      - ./data/uptime-kuma:/app/data:Z
+      - ./data/uptime-kuma:/app/data
     restart: unless-stopped
     networks:
       waifunet:
