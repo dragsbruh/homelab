@@ -1,17 +1,43 @@
 services:
-  gitea:
-    image: docker.io/gitea/gitea:latest
-    container_name: gitea
+  forgejo:
+    image: codeberg.org/forgejo/forgejo:11.0.2
+    container_name: forgejo
     restart: unless-stopped
     ports:
       - "2222:22"
-      # - "5050:3000" # for initial setup
+      - "5050:3000" # for initial setup
     volumes:
-      - ./data/gitea:/data
+      - ./data/forgejo:/data
     networks:
       waifunet:
         aliases:
-          - waifutea-net
+          - forgy-net
+
+  gitea_act_runner:
+    image: gitea/act_runner:nightly
+    container_name: gitea-act-runner
+    restart: unless-stopped
+    environment:
+      - CONFIG_FILE=/config.yml
+      - GITEA_INSTANCE_URL=http://forgy-net:3000/
+      - GITEA_RUNNER_REGISTRATION_TOKEN=${REGISTRATION_TOKEN}
+      - GITEA_RUNNER_NAME=waifumustact
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./config/gitea-act-runner.yml:/config.yml
+      - ./data/gitea-act-runner:/data
+      - ./scripts/act_init.sh:/init.sh
+    depends_on:
+      - forgejo
+    security_opt:
+      - label=disable
+    ports:
+      - "7088:7088" # cache
+    networks:
+      waifunet:
+        aliases:
+          - forgy-act-runner-net
+    entrypoint: ["/sbin/tini", "--", "/init.sh"] # skips registration if registered
 
   cloudflared:
     image: cloudflare/cloudflared:latest
@@ -24,32 +50,6 @@ services:
       waifunet:
         aliases:
           - cloudflared-net
-
-  gitea_act_runner:
-    image: gitea/act_runner:nightly
-    container_name: gitea-act-runner
-    restart: unless-stopped
-    environment:
-      - CONFIG_FILE=/config.yml
-      - GITEA_INSTANCE_URL=http://waifutea-net:3000/
-      - GITEA_RUNNER_REGISTRATION_TOKEN=${REGISTRATION_TOKEN}
-      - GITEA_RUNNER_NAME=waifumustact
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./config/gitea-act-runner.yml:/config.yml
-      - ./data/gitea-act-runner:/data
-      - ./scripts/act_init.sh:/init.sh
-    depends_on:
-      - gitea
-    security_opt:
-      - label=disable
-    ports:
-      - "7088:7088" # cache
-    networks:
-      waifunet:
-        aliases:
-          - waifutea-act-runner-net
-    entrypoint: ["/sbin/tini", "--", "/init.sh"] # skips registration if registered
 
   glance:
     container_name: glance
@@ -72,7 +72,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./data/portainer:/data
-    command: --base-url=/portainer/
     networks:
       waifunet:
         aliases:

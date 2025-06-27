@@ -6,20 +6,20 @@ services:
     target:
       origin: http://glance-net:8080
 
-  - name: gitea
+  - name: forgy
     host: git.vinster.xyz 
     target:
-      origin: http://waifutea-net:3000
+      origin: http://forgy-net:3000
 
   - name: uptime kuma
     host: uptime.vinster.xyz
     target:
       origin: http://kuma-net:3001
 
-  - name: portainer
-    host: sudo.vinster.xyz
-    target:
-      origin: http://portainer-net:9000
+  # - name: portainer
+  #   host: sudo.vinster.xyz
+  #   target:
+  #     origin: http://portainer-net:9000
 
   - name: root
     host: vinster.xyz
