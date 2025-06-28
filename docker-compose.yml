@@ -77,18 +77,6 @@ services:
         aliases:
           - portainer-net
 
-  proxii:
-    image: proxii:latest
-    container_name: proxii
-    restart: unless-stopped
-    volumes:
-      - ./config/proxii.yml:/app/proxii.yml
-      - ./web/public:/web/public
-    networks:
-      waifunet:
-        aliases:
-          - proxy-net
-
   uptime-kuma:
     container_name: uptime_kuma
     image: louislam/uptime-kuma:1
@@ -99,6 +87,19 @@ services:
       waifunet:
         aliases:
           - kuma-net
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    volumes:
+      - ./config/nginx:/etc/nginx:ro
+      - ./web/public:/var/www:ro
+    ports:
+      - 9000:9000
+    networks:
+      waifunet:
+        aliases:
+          - proxy-net
 
 networks:
   waifunet:
