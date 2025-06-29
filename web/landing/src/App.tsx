@@ -37,6 +37,13 @@ const services: {
     icon: "/images/portainer.png",
     url: "https://sudo.vinster.xyz",
   },
+  {
+    name: "swingmusic",
+    description:
+      "the greatest music server with the greatest music collection ever",
+    icon: "/images/swing.svg",
+    url: "https://music.vinster.xyz",
+  },
 ];
 
 const features = [
@@ -109,6 +116,7 @@ function App() {
               {(service) => (
                 <a
                   href={service.url}
+                  target="_blank" 
                   class="flex gap-4 bg-surface-alt p-4 hover:scale-[102%] transition-transform"
                 >
                   <img
@@ -123,6 +131,18 @@ function App() {
                 </a>
               )}
             </For>
+            <p>
+              in case you want to have an account on any of these services,
+              registrations are disabled, but you can always DM me on discord!
+              you can see all my socials 
+              <a
+                class="text-accent underline"
+                target="_blank"
+                href="https://furina.is-a.dev/socials"
+              >
+                here
+              </a>
+            </p>
           </div>
           <div class="flex flex-col gap-4">
             <h1 class="text-xl">
