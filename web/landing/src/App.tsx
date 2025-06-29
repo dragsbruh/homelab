@@ -25,12 +25,12 @@ const services: {
     icon: "/images/kuma.svg",
     url: "https://uptime.vinster.xyz/status/postmiku",
   },
-  {
-    name: "searxng",
-    description: "bestestest search engine!!11!",
-    icon: "/images/searxng.svg",
-    url: "https://search.vinster.xyz",
-  },
+  // {
+  //   name: "searxng",
+  //   description: "bestestest search engine!!11!",
+  //   icon: "/images/searxng.svg",
+  //   url: "https://search.vinster.xyz",
+  // },
   {
     name: "portainer",
     description: "surely safe enough to expose right???2?",

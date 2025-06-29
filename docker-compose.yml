@@ -101,18 +101,18 @@ services:
         aliases:
           - proxy-net
 
-  search:
-    image: searxng/searxng
-    container_name: searxng
-    volumes:
-      - ./data/searxng:/etc/searxng
-    environment:
-      - BASE_URL=https://search.vinster.xyz
-      - INSTANCE_NAME=mikusearch
-    networks:
-      waifunet:
-        aliases:
-          - search-net
+  # search:
+  #   image: searxng/searxng
+  #   container_name: searxng
+  #   volumes:
+  #     - ./data/searxng:/etc/searxng
+  #   environment:
+  #     - BASE_URL=https://search.vinster.xyz
+  #     - INSTANCE_NAME=mikusearch
+  #   networks:
+  #     waifunet:
+  #       aliases:
+  #         - search-net
 
 networks:
   waifunet:
