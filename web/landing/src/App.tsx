@@ -9,21 +9,33 @@ const services: {
   {
     name: "glance",
     description: "super cool home page smh",
-    icon: "/glance.svg",
+    icon: "/images/glance.svg",
     url: "https://glance.vinster.xyz",
   },
   {
-    name: "waifutea",
+    name: "forgy",
     description:
       "kawaii git hosting!! (registrations are closed currently, hmu if you need an account smh)",
-    icon: "/tea.svg",
+    icon: "/images/forgejo.svg",
     url: "https://git.vinster.xyz",
   },
   {
     name: "uptime",
     description: "see the incredible uptime of this incredible homelab!!!1!",
-    icon: "/kuma.svg",
+    icon: "/images/kuma.svg",
     url: "https://uptime.vinster.xyz/status/postmiku",
+  },
+  {
+    name: "searxng",
+    description: "bestestest search engine!!11!",
+    icon: "/images/searxng.svg",
+    url: "https://search.vinster.xyz",
+  },
+  {
+    name: "portainer",
+    description: "surely safe enough to expose right???2?",
+    icon: "/images/portainer.png",
+    url: "https://sudo.vinster.xyz",
   },
 ];
 
