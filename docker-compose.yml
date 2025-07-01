@@ -119,9 +119,7 @@ services:
     image: ghcr.io/swingmx/swingmusic
     restart: unless-stopped
     volumes:
-      - /home/dragsbruh/Music/favs:/music/favs:ro
-      - /home/dragsbruh/Music/solo_leveling:/music/solo_leveling:ro
-      - /home/dragsbruh/Music/genshin:/music/genshin:ro
+      - /home/dragsbruh/Music/all:/music/all:ro
       - ./data/swingmusic:/config
     networks:
       waifunet:
