@@ -74,7 +74,10 @@ pages:
 
             token: ${GLANCE_GITHUB_TOKEN}
             repositories:
-              - go-gitea/gitea
+              - ziglang/zig
+              - oven-sh/bun
+              - vlang/v
+              - TodePond/GulfOfMexico 
 
   # Add more pages here:
   # - name: Your page name

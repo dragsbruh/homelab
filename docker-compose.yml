@@ -20,7 +20,7 @@ services:
     environment:
       - CONFIG_FILE=/config.yml
       - GITEA_INSTANCE_URL=http://forgy-net:3000/
-      - GITEA_RUNNER_REGISTRATION_TOKEN=${REGISTRATION_TOKEN}
+      - GITEA_RUNNER_REGISTRATION_TOKEN=${GITEA_REGISTRATION_TOKEN}
       - GITEA_RUNNER_NAME=waifumustact
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -37,7 +37,7 @@ services:
       waifunet:
         aliases:
           - forgy-act-runner-net
-    entrypoint: ["/sbin/tini", "--", "/init.sh"] # skips registration if registered
+    entrypoint: [ "/sbin/tini", "--", "/init.sh" ] # skips registration if registered
 
   cloudflared:
     image: cloudflare/cloudflared:latest
@@ -95,11 +95,11 @@ services:
       - ./config/nginx:/etc/nginx:ro
       - ./web/public:/var/www:ro
     ports:
-      - 9000:9000
+      - 9000:80
     networks:
       waifunet:
         aliases:
-          - proxy-net
+          - entrypoint
 
   # search:
   #   image: searxng/searxng
@@ -119,13 +119,12 @@ services:
     image: ghcr.io/swingmx/swingmusic
     restart: unless-stopped
     volumes:
-      - /home/dragsbruh/Music/all:/music/all:ro
+      - /home/dragsbruh/Music:/music:ro
       - ./data/swingmusic:/config
     networks:
       waifunet:
         aliases:
           - music-net
-
   # navidrome:
   #   container_name: navidrome
   #   image: deluan/navidrome:latest
