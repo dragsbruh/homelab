@@ -6,45 +6,45 @@ const services: {
   icon: string;
   url: string;
 }[] = [
-  {
-    name: "glance",
-    description: "super cool home page smh",
-    icon: "/images/glance.svg",
-    url: "https://glance.vinster.xyz",
-  },
-  {
-    name: "forgy",
-    description:
-      "kawaii git hosting!! (registrations are closed currently, hmu if you need an account smh)",
-    icon: "/images/forgejo.svg",
-    url: "https://git.vinster.xyz",
-  },
-  {
-    name: "uptime",
-    description: "see the incredible uptime of this incredible homelab!!!1!",
-    icon: "/images/kuma.svg",
-    url: "https://uptime.vinster.xyz/status/postmiku",
-  },
-  // {
-  //   name: "searxng",
-  //   description: "bestestest search engine!!11!",
-  //   icon: "/images/searxng.svg",
-  //   url: "https://search.vinster.xyz",
-  // },
-  {
-    name: "portainer",
-    description: "surely safe enough to expose right???2?",
-    icon: "/images/portainer.png",
-    url: "https://sudo.vinster.xyz",
-  },
-  {
-    name: "swingmusic",
-    description:
-      "the greatest music server with the greatest music collection ever",
-    icon: "/images/swing.svg",
-    url: "https://music.vinster.xyz",
-  },
-];
+    {
+      name: "glance",
+      description: "super cool home page smh",
+      icon: "/images/glance.svg",
+      url: "https://glance.vinster.xyz",
+    },
+    {
+      name: "forgy",
+      description:
+        "kawaii git hosting!! (registrations are closed currently, hmu if you need an account smh)",
+      icon: "/images/forgejo.svg",
+      url: "https://git.vinster.xyz",
+    },
+    {
+      name: "uptime",
+      description: "see the incredible uptime of this incredible homelab!!!1!",
+      icon: "/images/kuma.svg",
+      url: "https://uptime.vinster.xyz/status/postmiku",
+    },
+    // {
+    //   name: "searxng",
+    //   description: "bestestest search engine!!11!",
+    //   icon: "/images/searxng.svg",
+    //   url: "https://search.vinster.xyz",
+    // },
+    // {
+    //   name: "portainer",
+    //   description: "surely safe enough to expose right???2?",
+    //   icon: "/images/portainer.png",
+    //   url: "https://sudo.vinster.xyz",
+    // },
+    {
+      name: "swingmusic",
+      description:
+        "the greatest music server with the greatest music collection ever",
+      icon: "/images/swing.svg",
+      url: "https://music.vinster.xyz",
+    },
+  ];
 
 const features = [
   "incredible uptime (10% at best)",
@@ -116,7 +116,7 @@ function App() {
               {(service) => (
                 <a
                   href={service.url}
-                  target="_blank" 
+                  target="_blank"
                   class="flex gap-4 bg-surface-alt p-4 hover:scale-[102%] transition-transform"
                 >
                   <img
@@ -134,7 +134,7 @@ function App() {
             <p>
               in case you want to have an account on any of these services,
               registrations are disabled, but you can always DM me on discord!
-              you can see all my socials 
+              you can see all my socials
               <a
                 class="text-accent underline"
                 target="_blank"
