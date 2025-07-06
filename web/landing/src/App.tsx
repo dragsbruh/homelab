@@ -13,9 +13,9 @@ const services: {
       url: "https://glance.vinster.xyz",
     },
     {
-      name: "forgy",
+      name: "nekommit",
       description:
-        "kawaii git hosting!! (registrations are closed currently, hmu if you need an account smh)",
+        "commit to your waifus!! (registrations are closed currently, hmu if you need an account smh)",
       icon: "/images/forgejo.svg",
       url: "https://git.vinster.xyz",
     },
@@ -50,6 +50,7 @@ const features = [
   "incredible uptime (10% at best)",
   "a lot of useful publicly accessible services (atleast 1? i think? idk)",
   "running on an absolute BEAST of a machine (see specs below)",
+  "we nuked your data when i reinstalled linux, forgot to backup your data. sowwy >~<"
 ];
 
 const specs = [
@@ -70,7 +71,7 @@ const specs = [
   "Bluetooth: Yes, technically",
   "Virtualization: VT-x — ready to host a full homelab *if you believe hard enough*",
   "GPU APIs: Vulkan 1.3, OpenGL 4.6 — impressive support for all the 2D GUIs you'll never run",
-  "Thermals: idles at 43°C — just chillin’, literally",
+  "Thermals: idles at 50°C — just chillin’, literally",
   "Uptime: somewhere between 5 minutes and 30 days, depending on mood",
   "Case: wrapped in the finest injection-molded plasti c Lenovo could afford in 2022",
 ];
@@ -136,7 +137,7 @@ function App() {
               registrations are disabled, but you can always DM me on discord!
               you can see all my socials
               <a
-                class="text-accent underline"
+                class="text-accent underline pl-1"
                 target="_blank"
                 href="https://furina.is-a.dev/socials"
               >
