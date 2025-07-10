@@ -13,32 +13,6 @@ services:
         aliases:
           - forgy-net
 
-  gitea_act_runner:
-    image: gitea/act_runner:nightly
-    container_name: gitea-act-runner
-    restart: unless-stopped
-    environment:
-      - CONFIG_FILE=/config.yml
-      - GITEA_INSTANCE_URL=http://forgy-net:3000/
-      - GITEA_RUNNER_REGISTRATION_TOKEN=${GITEA_REGISTRATION_TOKEN}
-      - GITEA_RUNNER_NAME=waifumustact
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./config/gitea-act-runner.yml:/config.yml
-      - ./data/gitea-act-runner:/data
-      - ./scripts/act_init.sh:/init.sh
-    depends_on:
-      - forgejo
-    security_opt:
-      - label=disable
-    ports:
-      - "7088:7088" # cache
-    networks:
-      waifunet:
-        aliases:
-          - forgy-act-runner-net
-    entrypoint: [ "/sbin/tini", "--", "/init.sh" ] # skips registration if registered
-
   cloudflared:
     image: cloudflare/cloudflared:latest
     container_name: cloudflared
@@ -65,29 +39,6 @@ services:
         aliases:
           - glance-net
 
-  # portainer:
-  #   image: portainer/portainer-ce:latest
-  #   container_name: portainer
-  #   restart: unless-stopped
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #     - ./data/portainer:/data
-  #   networks:
-  #     waifunet:
-  #       aliases:
-  #         - portainer-net
-
-  uptime-kuma:
-    container_name: uptime_kuma
-    image: louislam/uptime-kuma:1
-    volumes:
-      - ./data/uptime-kuma:/app/data
-    restart: unless-stopped
-    networks:
-      waifunet:
-        aliases:
-          - kuma-net
-
   nginx:
     image: nginx:alpine
     container_name: nginx
@@ -101,68 +52,19 @@ services:
         aliases:
           - entrypoint
 
-  # search:
-  #   image: searxng/searxng
-  #   container_name: searxng
-  #   volumes:
-  #     - ./data/searxng:/etc/searxng
-  #   environment:
-  #     - BASE_URL=https://search.vinster.xyz
-  #     - INSTANCE_NAME=mikusearch
-  #   networks:
-  #     waifunet:
-  #       aliases:
-  #         - search-net
-
   swingmusic:
     container_name: swingmusic
-    image: ghcr.io/swingmx/swingmusic
+    image: ghcr.io/swingmx/swingmusic:latest
     restart: unless-stopped
     volumes:
       - /home/dragsbruh/Music:/music:ro
       - ./data/swingmusic:/config
+    ports:
+      - 80:1970
     networks:
       waifunet:
         aliases:
           - music-net
-  # navidrome:
-  #   container_name: navidrome
-  #   image: deluan/navidrome:latest
-  #   volumes:
-  #     - /home/dragsbruh/Music/favs:/music/favs:ro
-  #     - /home/dragsbruh/Music/solo_leveling:/music/solo_leveling:ro
-  #     - /home/dragsbruh/Music/genshin:/music/genshin:ro
-  #     - ./data/navidrome:/data
-  #   environment:
-  #     - ND_MUSICFOLDER=/music
-  #     - ND_PORT=3000
-  #     - ND_LOGLEVEL=info
-  #     - ND_SESSIONTIMEOUT=168h
-  #     - ND_SCANSCHEDULE=1h
-  #   networks:
-  #     waifunet:
-  #       aliases:
-  #         - navidrome-net
-
-  # feishin:
-  #   container_name: feishin
-  #   image: "ghcr.io/jeffvli/feishin:latest"
-  #   environment:
-  #     - SERVER_NAME=navidrome
-  #     - SERVER_LOCK=true
-  #     - SERVER_TYPE=navidrome
-  #     - SERVER_URL= https://navidrome.vinster.xyz/
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - UMASK=002
-  #     - TZ=Asia/Kolkata
-  #   ports:
-  #     - 9180:9180
-  #   restart: unless-stopped
-  #   networks:
-  #     waifunet:
-  #       aliases:
-  #         - feishin-net
 
 networks:
   waifunet:
