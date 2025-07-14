@@ -1,5 +1,6 @@
 server:
   proxied: true
+  port: 80
 
 pages:
   - name: Home
@@ -77,7 +78,7 @@ pages:
               - ziglang/zig
               - oven-sh/bun
               - vlang/v
-              - TodePond/GulfOfMexico 
+              - TodePond/GulfOfMexico
 
   # Add more pages here:
   # - name: Your page name

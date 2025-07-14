@@ -5,13 +5,8 @@ services:
     restart: unless-stopped
     ports:
       - "2222:22"
-      - "5050:3000" # for initial setup
     volumes:
       - ./data/forgejo:/data
-    networks:
-      waifunet:
-        aliases:
-          - forgy-net
 
   cloudflared:
     image: cloudflare/cloudflared:latest
@@ -20,10 +15,6 @@ services:
     command: tunnel run
     environment:
       - TUNNEL_TOKEN=${CLOUDFLARED_TOKEN}
-    networks:
-      waifunet:
-        aliases:
-          - cloudflared-net
 
   glance:
     container_name: glance
@@ -34,10 +25,6 @@ services:
       - GLANCE_LOCATION=${GLANCE_LOCATION}
     volumes:
       - ./config/glance.yml:/app/config/glance.yml
-    networks:
-      waifunet:
-        aliases:
-          - glance-net
 
   nginx:
     image: nginx:alpine
@@ -46,11 +33,7 @@ services:
       - ./config/nginx:/etc/nginx:ro
       - ./web/public:/var/www:ro
     ports:
-      - 9000:80
-    networks:
-      waifunet:
-        aliases:
-          - entrypoint
+      - 80:80
 
   swingmusic:
     container_name: swingmusic
@@ -59,12 +42,42 @@ services:
     volumes:
       - /home/dragsbruh/Music:/music:ro
       - ./data/swingmusic:/config
-    ports:
-      - 80:1970
-    networks:
-      waifunet:
-        aliases:
-          - music-net
+
+  navidrome:
+    container_name: navidrome
+    image: deluan/navidrome:latest
+    restart: unless-stopped
+    volumes:
+      - ./data/navidrome:/data
+      - "/home/dragsbruh/Music:/music:ro"
+    environment:
+      - ND_LASTFM_APIKEY=${ND_LASTFM_APIKEY}
+      - ND_LASTFM_SECRET=${ND_LASTFM_SECRET}
+      - ND_SPOTIFY_ID=${ND_SPOTIFY_ID}
+      - ND_SPOTIFY_SECRET=${ND_SPOTIFY_SECRET}
+
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    user: "${UID}:${GID}"
+    volumes:
+      - /home/dragsbruh/.config/jellyfin:/config
+      - /home/dragsbruh/.cache/jellyfin:/cache
+      - /home/dragsbruh/Videos:/media:ro
+      - /usr/share/fonts:/usr/local/share/fonts/custom:ro
+    restart: unless-stopped
+    environment:
+      - JELLYFIN_PublishedServerUrl=https://fin.vinster.xyz
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  filebrowser:
+    image: filebrowser/filebrowser
+    container_name: filebrowser
+    volumes:
+      - /home/dragsbruh/Videos/Sacred:/srv
+      - ./data/filebrowser/database:/database
+      - ./data/filebrowser/config:/config
 
 networks:
   waifunet:

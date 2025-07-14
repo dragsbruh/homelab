@@ -6,51 +6,51 @@ const services: {
   icon: string;
   url: string;
 }[] = [
-    {
-      name: "glance",
-      description: "super cool home page smh",
-      icon: "/images/glance.svg",
-      url: "https://glance.vinster.xyz",
-    },
-    {
-      name: "nekommit",
-      description:
-        "commit to your waifus!! (registrations are closed currently, hmu if you need an account smh)",
-      icon: "/images/forgejo.svg",
-      url: "https://git.vinster.xyz",
-    },
-    {
-      name: "uptime",
-      description: "see the incredible uptime of this incredible homelab!!!1!",
-      icon: "/images/kuma.svg",
-      url: "https://uptime.vinster.xyz/status/postmiku",
-    },
-    // {
-    //   name: "searxng",
-    //   description: "bestestest search engine!!11!",
-    //   icon: "/images/searxng.svg",
-    //   url: "https://search.vinster.xyz",
-    // },
-    // {
-    //   name: "portainer",
-    //   description: "surely safe enough to expose right???2?",
-    //   icon: "/images/portainer.png",
-    //   url: "https://sudo.vinster.xyz",
-    // },
-    {
-      name: "swingmusic",
-      description:
-        "the greatest music server with the greatest music collection ever",
-      icon: "/images/swing.svg",
-      url: "https://music.vinster.xyz",
-    },
-  ];
+  {
+    name: "glance",
+    description: "super cool home page smh",
+    icon: "/images/glance.svg",
+    url: "https://glance.vinster.xyz",
+  },
+  {
+    name: "nekommit",
+    description:
+      "(forgejo) commit to your waifus!! (registrations are closed currently, hmu if you need an account smh)",
+    icon: "/images/forgejo.svg",
+    url: "https://git.vinster.xyz",
+  },
+  {
+    name: "swingmusic",
+    description:
+      "the greatest music server with the greatest music collection ever",
+    icon: "/images/swing.svg",
+    url: "https://music.vinster.xyz",
+  },
+  {
+    name: "filebrowser",
+    description: "please do not spam",
+    icon: "/images/filebrowser.svg",
+    url: "https://files.vinster.xyz",
+  },
+  {
+    name: "navidrome",
+    description: "music server that is fast",
+    icon: "/images/navidrome.png",
+    url: "https://navi.vinster.xyz",
+  },
+  {
+    name: "jellyfin",
+    description: "if this is compromised, my cpu is cooked",
+    icon: "/images/jellyfin.png",
+    url: "https://fin.vinster.xyz",
+  },
+];
 
 const features = [
   "incredible uptime (10% at best)",
   "a lot of useful publicly accessible services (atleast 1? i think? idk)",
   "running on an absolute BEAST of a machine (see specs below)",
-  "we nuked your data when i reinstalled linux, forgot to backup your data. sowwy >~<"
+  "we nuked your data when i reinstalled linux, forgot to backup your data. sowwy >~<",
 ];
 
 const specs = [
