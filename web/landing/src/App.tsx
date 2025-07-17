@@ -1,5 +1,7 @@
 import { For } from "solid-js";
 
+const serverRoot = window.location.hostname;
+
 const services: {
   name: string;
   description: string;
@@ -10,39 +12,39 @@ const services: {
     name: "glance",
     description: "super cool home page smh",
     icon: "/images/glance.svg",
-    url: "https://glance.vinster.xyz",
+    url: `https://glance.${serverRoot}`,
   },
   {
     name: "nekommit",
     description:
       "(forgejo) commit to your waifus!! (registrations are closed currently, hmu if you need an account smh)",
     icon: "/images/forgejo.svg",
-    url: "https://git.vinster.xyz",
+    url: `https://git.${serverRoot}`,
   },
   {
     name: "swingmusic",
     description:
       "the greatest music server with the greatest music collection ever",
     icon: "/images/swing.svg",
-    url: "https://music.vinster.xyz",
+    url: `https://music.${serverRoot}`,
   },
   {
     name: "filebrowser",
     description: "please do not spam",
     icon: "/images/filebrowser.svg",
-    url: "https://files.vinster.xyz",
+    url: `https://files.${serverRoot}`,
   },
   {
     name: "navidrome",
     description: "music server that is fast",
     icon: "/images/navidrome.png",
-    url: "https://navi.vinster.xyz",
+    url: `https://navi.${serverRoot}`,
   },
   {
     name: "jellyfin",
     description: "if this is compromised, my cpu is cooked",
     icon: "/images/jellyfin.png",
-    url: "https://fin.vinster.xyz",
+    url: `https://fin.${serverRoot}`,
   },
 ];
 

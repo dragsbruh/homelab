@@ -30,10 +30,13 @@ services:
     image: nginx:alpine
     container_name: nginx
     volumes:
-      - ./config/nginx:/etc/nginx:ro
       - ./web/public:/var/www:ro
+      - /etc/ssl/miku.local:/etc/ssl/miku.local:ro
+      - ./config/nginx:/etc/nginx:ro
+      - ./data/nginx/certs:/certs
     ports:
       - 80:80
+      - 443:443
 
   swingmusic:
     container_name: swingmusic
