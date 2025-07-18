@@ -90,9 +90,9 @@ services:
       - ./data/filebrowser/database:/database
       - ./data/filebrowser/config:/config
 
-  echo:
-    image: echo:latest
-    container_name: echo
+  httpeak:
+    image: ghcr.io/dragsbruh/httpeak:latest
+    container_name: httpeak
 
 networks:
   waifunet:

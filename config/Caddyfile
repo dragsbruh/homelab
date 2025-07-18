@@ -129,13 +129,13 @@ https://files.waifu.land {
 
 http://echo.vinster.xyz {
 	import header_defaults
-	reverse_proxy echo
+	reverse_proxy httpeak
 }
 
 https://echo.waifu.land {
 	import header_defaults
 	import localtls
-	reverse_proxy echo
+	reverse_proxy httpeak
 }
 
 # ------- fallback (everything else)
