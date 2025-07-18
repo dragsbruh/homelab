@@ -62,7 +62,6 @@ services:
   jellyfin:
     image: jellyfin/jellyfin
     container_name: jellyfin
-    user: "${UID}:${GID}"
     volumes:
       - /home/dragsbruh/.config/jellyfin:/config
       - /home/dragsbruh/.cache/jellyfin:/cache
@@ -73,6 +72,8 @@ services:
       - JELLYFIN_PublishedServerUrl=https://fin.vinster.xyz
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    devices:
+      - /dev/dri:/dev/dri
 
   filebrowser:
     image: filebrowser/filebrowser
