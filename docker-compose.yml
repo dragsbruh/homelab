@@ -90,6 +90,10 @@ services:
       - ./data/filebrowser/database:/database
       - ./data/filebrowser/config:/config
 
+  echo:
+    image: echo:latest
+    container_name: echo
+
 networks:
   waifunet:
     name: waifunet

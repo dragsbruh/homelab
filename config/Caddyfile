@@ -6,8 +6,7 @@
 # ------- helpers
 
 (header_defaults) {
-	header X-Real-IP {http.request.header.CF-Connecting-IP}
-	header X-Forwarded-For {http.request.header.CF-Connecting-IP}
+	request_header X-Real-IP {http.request.header.CF-Connecting-IP}
 
 	header {
 		X-Frame-Options "SAMEORIGIN"
@@ -124,6 +123,19 @@ https://files.waifu.land {
 	import header_defaults
 	import localtls
 	reverse_proxy filebrowser
+}
+
+# ------- echo
+
+http://echo.vinster.xyz {
+	import header_defaults
+	reverse_proxy echo
+}
+
+https://echo.waifu.land {
+	import header_defaults
+	import localtls
+	reverse_proxy echo
 }
 
 # ------- fallback (everything else)
