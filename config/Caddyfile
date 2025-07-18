@@ -1,0 +1,140 @@
+{
+	auto_https off
+	local_certs
+}
+
+# ------- helpers
+
+(header_defaults) {
+	header X-Real-IP {http.request.header.CF-Connecting-IP}
+	header X-Forwarded-For {http.request.header.CF-Connecting-IP}
+
+	header {
+		X-Frame-Options "SAMEORIGIN"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "no-referrer"
+		Strict-Transport-Security "max-age=31536000"
+	}
+}
+
+(landing) {
+	import header_defaults
+	root * /srv
+	file_server
+}
+
+(localtls) {
+	tls /certs/_wildcard.waifu.land.pem /certs/_wildcard.waifu.land-key.pem
+}
+
+# ------- http -> https
+
+http://waifu.land {
+	redir https://waifu.land{uri} permanent
+}
+
+http://*.waifu.land {
+	redir https://{host}{uri} permanent
+}
+
+# ------- landing pages
+
+http://vinster.xyz {
+	import landing
+}
+
+https://waifu.land {
+	import landing
+	tls /certs/waifu.land.pem /certs/waifu.land-key.pem
+}
+
+# ------- glance
+
+http://home.vinster.xyz {
+	import header_defaults
+	reverse_proxy glance
+}
+
+https://home.waifu.land {
+	import header_defaults
+	import localtls
+	reverse_proxy glance
+}
+
+# ------- forgejo
+
+http://git.vinster.xyz {
+	import header_defaults
+	reverse_proxy forgejo
+}
+
+https://git.waifu.land {
+	import header_defaults
+	import localtls
+	reverse_proxy forgejo
+}
+
+# ------- jellyfin
+
+http://tv.vinster.xyz {
+	import header_defaults
+	reverse_proxy jellyfin:8096
+}
+
+https://tv.waifu.land {
+	import header_defaults
+	import localtls
+	reverse_proxy jellyfin:8096
+}
+
+# ------- swing music
+
+# http://music.vinster.xyz {
+# 	import header_defaults
+# 	reverse_proxy swingmusic:1970
+# }
+
+# https://music.waifu.land {
+# 	import header_defaults
+# 	import localtls
+# 	reverse_proxy swingmusic:1970
+# }
+
+# ------- navidrome
+
+http://radio.vinster.xyz {
+	import header_defaults
+	reverse_proxy navidrome:4533
+}
+
+https://radio.waifu.land {
+	import header_defaults
+	import localtls
+	reverse_proxy navidrome:4533
+}
+
+# ------- filebrowser
+
+http://files.vinster.xyz {
+	import header_defaults
+	reverse_proxy filebrowser
+}
+
+https://files.waifu.land {
+	import header_defaults
+	import localtls
+	reverse_proxy filebrowser
+}
+
+# ------- fallback (everything else)
+
+http://*.vinster.xyz {
+	import header_defaults
+	redir https://vinster.xyz
+}
+
+https://*.waifu.land {
+	import header_defaults
+	import localtls
+	redir https://waifu.land
+}

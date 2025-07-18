@@ -26,25 +26,29 @@ services:
     volumes:
       - ./config/glance.yml:/app/config/glance.yml
 
-  nginx:
-    image: nginx:alpine
-    container_name: nginx
-    volumes:
-      - ./web/public:/var/www:ro
-      - /etc/ssl/miku.local:/etc/ssl/miku.local:ro
-      - ./config/nginx:/etc/nginx:ro
-      - ./data/nginx/certs:/certs
+  caddy:
+    image: caddy:latest
+    restart: unless-stopped
+    container_name: caddy
     ports:
       - 80:80
       - 443:443
-
-  swingmusic:
-    container_name: swingmusic
-    image: ghcr.io/swingmx/swingmusic:latest
-    restart: unless-stopped
+      - 443:443/udp
+      - 2019:2019
     volumes:
-      - /home/dragsbruh/Music:/music:ro
-      - ./data/swingmusic:/config
+      - ./config:/etc/caddy
+      - ./web/public:/srv
+      - ./data/caddy/data:/data
+      - ./data/caddy/config:/config
+      - ./data/certs:/certs
+
+  # swingmusic:
+  #   container_name: swingmusic
+  #   image: ghcr.io/swingmx/swingmusic:latest
+  #   restart: unless-stopped
+  #   volumes:
+  #     - /home/dragsbruh/Music:/music:ro
+  #     - ./data/swingmusic:/config
 
   navidrome:
     container_name: navidrome
@@ -58,6 +62,9 @@ services:
       - ND_LASTFM_SECRET=${ND_LASTFM_SECRET}
       - ND_SPOTIFY_ID=${ND_SPOTIFY_ID}
       - ND_SPOTIFY_SECRET=${ND_SPOTIFY_SECRET}
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
 
   jellyfin:
     image: jellyfin/jellyfin

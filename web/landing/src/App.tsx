@@ -12,7 +12,7 @@ const services: {
     name: "glance",
     description: "super cool home page smh",
     icon: "/images/glance.svg",
-    url: `https://glance.${serverRoot}`,
+    url: `https://home.${serverRoot}`,
   },
   {
     name: "nekommit",
@@ -38,13 +38,13 @@ const services: {
     name: "navidrome",
     description: "music server that is fast",
     icon: "/images/navidrome.png",
-    url: `https://navi.${serverRoot}`,
+    url: `https://radio.${serverRoot}`,
   },
   {
     name: "jellyfin",
     description: "if this is compromised, my cpu is cooked",
     icon: "/images/jellyfin.png",
-    url: `https://fin.${serverRoot}`,
+    url: `https://tv.${serverRoot}`,
   },
 ];
 
