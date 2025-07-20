@@ -85,8 +85,14 @@ services:
   filebrowser:
     image: filebrowser/filebrowser
     container_name: filebrowser
+    environment:
+      - PUID=1000
+      - PGID=1000
     volumes:
-      - /home/dragsbruh/Videos/Sacred:/srv
+      - /home/dragsbruh/Documents:/srv/Documents
+      - /home/dragsbruh/Videos:/srv/Videos
+      - /home/dragsbruh/Pictures:/srv/Pictures
+      - /home/dragsbruh/Music:/srv/Music
       - ./data/filebrowser/database:/database
       - ./data/filebrowser/config:/config
 
