@@ -99,7 +99,3 @@ services:
   httpeak:
     image: ghcr.io/dragsbruh/httpeak:latest
     container_name: httpeak
-
-networks:
-  waifunet:
-    name: waifunet
