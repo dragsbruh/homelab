@@ -42,13 +42,13 @@ services:
       - ./data/caddy/config:/config
       - ./data/certs:/certs
 
-  # swingmusic:
-  #   container_name: swingmusic
-  #   image: ghcr.io/swingmx/swingmusic:latest
-  #   restart: unless-stopped
-  #   volumes:
-  #     - /home/dragsbruh/Music:/music:ro
-  #     - ./data/swingmusic:/config
+  swingmusic:
+    container_name: swingmusic
+    image: ghcr.io/swingmx/swingmusic:latest
+    restart: unless-stopped
+    volumes:
+      - /home/dragsbruh/Music:/music:ro
+      - ./data/swingmusic:/config
 
   navidrome:
     container_name: navidrome

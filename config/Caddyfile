@@ -88,16 +88,16 @@ https://tv.waifu.land {
 
 # ------- swing music
 
-# http://music.vinster.xyz {
-# 	import header_defaults
-# 	reverse_proxy swingmusic:1970
-# }
+http://music.vinster.xyz {
+	import header_defaults
+	reverse_proxy swingmusic:1970
+}
 
-# https://music.waifu.land {
-# 	import header_defaults
-# 	import localtls
-# 	reverse_proxy swingmusic:1970
-# }
+https://music.waifu.land {
+	import header_defaults
+	import localtls
+	reverse_proxy swingmusic:1970
+}
 
 # ------- navidrome
 
