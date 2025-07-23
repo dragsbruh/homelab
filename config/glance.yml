@@ -30,11 +30,7 @@ pages:
           - type: twitch-channels
             channels:
               - theprimeagen
-              - j_blow
-              - piratesoftware
-              - cohhcarnage
-              - christitustech
-              - EJ_SA
+              - tsoding
 
       - size: full
         widgets:
