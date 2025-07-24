@@ -1,12 +1,27 @@
 {
 	auto_https off
 	local_certs
+	log {
+		output file /var/log/caddy/server.log
+		format json
+	}
+
+	servers {
+		trusted_proxies static 172.22.0.0/16
+		client_ip_headers Cf-Connecting-Ip
+	}
 }
 
 # ------- helpers
 
 (header_defaults) {
-	request_header X-Real-IP {http.request.header.CF-Connecting-IP}
+	request_header X-Real-IP {http.request.header.Cf-Connecting-IP}
+	request_header X-Forwarded-For {http.request.header.Cf-Connecting-IP}
+
+	log {
+		output file /var/log/caddy/access.log
+		format json
+	}
 
 	header {
 		X-Frame-Options "SAMEORIGIN"

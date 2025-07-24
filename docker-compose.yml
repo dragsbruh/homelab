@@ -41,6 +41,7 @@ services:
       - ./data/caddy/data:/data
       - ./data/caddy/config:/config
       - ./data/certs:/certs
+      - ./data/caddy/logs:/var/log/caddy
 
   swingmusic:
     container_name: swingmusic
@@ -70,8 +71,8 @@ services:
     image: jellyfin/jellyfin
     container_name: jellyfin
     volumes:
-      - /home/dragsbruh/.config/jellyfin:/config
-      - /home/dragsbruh/.cache/jellyfin:/cache
+      - ./data/navidrome/config:/config
+      - ./data/navidrome/cache:/cache
       - /home/dragsbruh/Videos:/media:ro
       - /usr/share/fonts:/usr/local/share/fonts/custom:ro
     restart: unless-stopped
@@ -99,3 +100,4 @@ services:
   httpeak:
     image: ghcr.io/dragsbruh/httpeak:latest
     container_name: httpeak
+    restart: unless-stopped
