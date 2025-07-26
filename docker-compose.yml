@@ -1,5 +1,3 @@
-version: "3.8"
-
 networks:
   homelab:
     external: true
@@ -64,7 +62,6 @@ services:
   swing:
     extends:
       file: ./apps/swing/compose.yml
-      service: swing
+      service: swingmusic
     networks:
       - homelab
-

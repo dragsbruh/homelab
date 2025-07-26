@@ -8,7 +8,7 @@ services:
       - /home/dragsbruh/Pictures:/srv/Pictures
       - /home/dragsbruh/Music:/srv/Music
       - ./data:/database
-      - ./config:/config
+      - ./settings.json:/config/settings.json
     environment:
       - PUID=1000
       - PGID=1000

@@ -9,8 +9,8 @@ services:
       - 443:443/udp
       - "2019:2019"
     volumes:
-      - ./data:/data
-      - ./config:/config
+      - ./data:/data/caddy
+      - ./config:/config/caddy
       - ./certs:/certs
       - ./logs:/var/log/caddy
       - ../../web/public:/srv

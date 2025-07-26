@@ -5,3 +5,4 @@ web
 apps/*/data
 apps/caddy/certs
 apps/caddy/logs
+apps/caddy/config
