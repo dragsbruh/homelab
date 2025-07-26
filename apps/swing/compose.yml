@@ -1,0 +1,14 @@
+services:
+  swingmusic:
+    container_name: swingmusic
+    image: ghcr.io/swingmx/swingmusic:latest
+    restart: unless-stopped
+    volumes:
+      - /home/dragsbruh/Music:/music:ro
+      - ./data:/config/swingmusic
+    networks:
+      - homelab
+
+networks:
+  homelab:
+    external: true

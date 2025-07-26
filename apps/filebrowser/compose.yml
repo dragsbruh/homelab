@@ -1,0 +1,20 @@
+services:
+  filebrowser:
+    container_name: filebrowser
+    image: filebrowser/filebrowser
+    volumes:
+      - /home/dragsbruh/Documents:/srv/Documents
+      - /home/dragsbruh/Videos:/srv/Videos
+      - /home/dragsbruh/Pictures:/srv/Pictures
+      - /home/dragsbruh/Music:/srv/Music
+      - ./data:/database
+      - ./config:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+    networks:
+      - homelab
+
+networks:
+  homelab:
+    external: true

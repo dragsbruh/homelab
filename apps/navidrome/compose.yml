@@ -1,0 +1,19 @@
+services:
+  navidrome:
+    container_name: navidrome
+    image: deluan/navidrome:latest
+    restart: unless-stopped
+    volumes:
+      - ./data:/data
+      - /home/dragsbruh/Music:/music:ro
+    env_file:
+      - .env
+    networks:
+      - homelab
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+
+networks:
+  homelab:
+    external: true

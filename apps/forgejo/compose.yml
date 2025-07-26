@@ -1,0 +1,15 @@
+services:
+  forgejo:
+    image: codeberg.org/forgejo/forgejo:11.0.2
+    container_name: forgejo
+    restart: unless-stopped
+    ports:
+      - "2222:22"
+    volumes:
+      - ./data:/data
+    networks:
+      - homalab
+
+networks:
+  homelab:
+    external: true

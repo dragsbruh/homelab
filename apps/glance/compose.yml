@@ -1,0 +1,13 @@
+services:
+  glance:
+    container_name: glance
+    image: glanceapp/glance:latest
+    restart: unless-stopped
+    volumes:
+      - ./config.yml:/app/config/glance.yml
+    env_file:
+      - .env
+
+networks:
+  homelab:
+    external: true

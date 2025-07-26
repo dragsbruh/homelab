@@ -1,0 +1,11 @@
+services:
+  httpeak:
+    container_name: httpeak
+    image: ghcr.io/dragsbruh/httpeak:latest
+    restart: unless-stopped
+    networks:
+      - homelab
+
+networks:
+  homelab:
+    external: true

@@ -1,0 +1,22 @@
+services:
+  jellyfin:
+    container_name: jellyfin
+    image: jellyfin/jellyfin
+    restart: unless-stopped
+    volumes:
+      - ./data/config:/config
+      - ./data/cache:/cache
+      - /home/dragsbruh/Videos:/media:ro
+      - /usr/share/fonts:/usr/local/share/fonts/custom:ro
+    environment:
+      - JELLYFIN_PublishedServerUrl=https://fin.vinster.xyz
+    networks:
+      - homelab
+    devices:
+      - /dev/dri:/dev/dri
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+networks:
+  homelab:
+    external: true
