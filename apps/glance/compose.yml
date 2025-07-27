@@ -7,6 +7,8 @@ services:
       - ./config.yml:/app/config/glance.yml
     env_file:
       - .env
+    networks:
+      - homelab
 
 networks:
   homelab:

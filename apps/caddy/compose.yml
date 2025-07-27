@@ -4,10 +4,10 @@ services:
     image: caddy:latest
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
+      - '80:80'
+      - '443:443'
       - 443:443/udp
-      - "2019:2019"
+      - '2019:2019'
     volumes:
       - ./data:/data/caddy
       - ./config:/config/caddy
@@ -15,6 +15,7 @@ services:
       - ./logs:/var/log/caddy
       - ../../web/public:/srv
       - ./Caddyfile:/etc/caddy/Caddyfile
+    env_file: .env
     networks:
       - homelab
 

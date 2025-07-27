@@ -1,0 +1,13 @@
+services:
+  redactyl:
+    container_name: redactyl
+    image: redactyl-dev:latest
+    environment:
+      - ADDR=:80
+      - DATABASE_URL=postgres://admin:supersecretsecret@postgres:5432/redactyl_dev?sslmode=disable
+    networks:
+      - homelab
+
+networks:
+  homelab:
+    external: true

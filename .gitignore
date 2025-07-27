@@ -1,6 +1,7 @@
 *.env
 
 web
+pgdata
 
 apps/*/data
 apps/caddy/certs

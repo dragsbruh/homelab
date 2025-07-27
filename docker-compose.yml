@@ -1,67 +1,71 @@
-networks:
-  homelab:
-    external: true
-
 services:
   caddy:
     extends:
       file: ./apps/caddy/compose.yml
       service: caddy
-    networks:
-      - homelab
-
-  cloudflared:
-    extends:
-      file: ./apps/cloudflared/compose.yml
-      service: cloudflared
-    networks:
-      - homelab
-
-  filebrowser:
-    extends:
-      file: ./apps/filebrowser/compose.yml
-      service: filebrowser
-    networks:
-      - homelab
-
-  forgejo:
-    extends:
-      file: ./apps/forgejo/compose.yml
-      service: forgejo
-    networks:
-      - homelab
 
   glance:
     extends:
       file: ./apps/glance/compose.yml
       service: glance
-    networks:
-      - homelab
-
-  httpeak:
-    extends:
-      file: ./apps/httpeak/compose.yml
-      service: httpeak
-    networks:
-      - homelab
-
-  jellyfin:
-    extends:
-      file: ./apps/jellyfin/compose.yml
-      service: jellyfin
-    networks:
-      - homelab
 
   navidrome:
     extends:
       file: ./apps/navidrome/compose.yml
       service: navidrome
-    networks:
-      - homelab
 
-  swing:
+  swingmusic:
     extends:
       file: ./apps/swing/compose.yml
       service: swingmusic
-    networks:
-      - homelab
+
+  cloudflared:
+    extends:
+      file: ./apps/cloudflared/compose.yml
+      service: cloudflared
+
+  filebrowser:
+    extends:
+      file: ./apps/filebrowser/compose.yml
+      service: filebrowser
+
+  forgejo:
+    extends:
+      file: ./apps/forgejo/compose.yml
+      service: forgejo
+
+  httpeak:
+    extends:
+      file: ./apps/httpeak/compose.yml
+      service: httpeak
+
+  jellyfin:
+    extends:
+      file: ./apps/jellyfin/compose.yml
+      service: jellyfin
+
+  # redactyl:
+  #   extends:
+  #     file: ./apps/redactyl/compose.yml
+  #     service: redactyl
+
+  goaccess:
+    extends:
+      file: ./apps/goaccess/compose.yml
+      service: goaccess
+
+  # postgres:
+  #   container_name: postgres
+  #   image: postgres:16
+  #   volumes:
+  #     - ./pgdata:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_USER=admin
+  #     - POSTGRES_PASSWORD=supersecretsecret
+  #     - POSTGRES_DB=redactyl_dev
+  #   networks:
+  #     - homelab
+
+networks:
+  homelab:
+    external: true

@@ -75,6 +75,35 @@ https://home.waifu.land {
 	reverse_proxy glance
 }
 
+# ------- goaccess
+
+(goaccess) {
+	@websocket {
+		header Connection *Upgrade*
+		header Upgrade websocket
+	}
+
+	reverse_proxy @websocket goaccess:443
+	reverse_proxy goaccess:8080
+}
+
+http://log.vinster.xyz {
+	import header_defaults
+
+	basic_auth /* {
+		dragsbruh {$LOGS_PASSWORD}
+	}
+
+	import goaccess
+}
+
+https://log.waifu.land {
+	import header_defaults
+	import localtls
+
+	import goaccess
+}
+
 # ------- forgejo
 
 http://git.vinster.xyz {
@@ -151,6 +180,19 @@ https://echo.waifu.land {
 	import header_defaults
 	import localtls
 	reverse_proxy httpeak
+}
+
+# ------- redactyl
+
+http://wiki.vinster.xyz {
+	import header_defaults
+	reverse_proxy redactyl
+}
+
+https://wiki.waifu.land {
+	import header_defaults
+	import localtls
+	reverse_proxy redactyl
 }
 
 # ------- fallback (everything else)
