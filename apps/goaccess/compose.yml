@@ -2,6 +2,7 @@ services:
   goaccess:
     container_name: goaccess
     image: goaccess-dashboard
+    restart: unless-stopped
     volumes:
       - ../caddy/logs/access.log:/var/log/access.log
     networks:

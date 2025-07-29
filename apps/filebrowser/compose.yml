@@ -7,6 +7,7 @@ services:
       - /home/dragsbruh/Videos:/srv/Videos
       - /home/dragsbruh/Pictures:/srv/Pictures
       - /home/dragsbruh/Music:/srv/Music
+      - /home/dragsbruh/Downloads:/srv/Downloads
       - ./data:/database
       - ./settings.json:/config/settings.json
     environment:
@@ -14,6 +15,7 @@ services:
       - PGID=1000
     networks:
       - homelab
+    restart: unless-stopped
 
 networks:
   homelab:
