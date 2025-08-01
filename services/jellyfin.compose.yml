@@ -1,0 +1,17 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    restart: unless-stopped
+    volumes:
+      - ../heap/jellyfin/config:/config
+      - ../heap/jellyfin/cache:/cache
+      - /home/dragsbruh/Videos:/media:ro
+      - /usr/share/fonts:/usr/local/share/fonts/custom:ro
+    environment:
+      - JELLYFIN_PublishedServerUrl=https://tv.vinster.xyz
+    networks:
+      - public
+    devices:
+      - /dev/dri:/dev/dri
+    extra_hosts:
+      - host.docker.internal:host-gateway

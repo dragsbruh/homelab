@@ -1,0 +1,13 @@
+services:
+  postgresql:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    volumes:
+      - ../../heap/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=${POSTGRES_ADMIN_PASSWORD}
+    networks:
+      - internal

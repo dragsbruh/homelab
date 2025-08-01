@@ -1,0 +1,144 @@
+{
+	auto_https off
+	local_certs
+	log {
+		output file /var/log/caddy/server.log
+		format json
+	}
+
+	servers {
+		trusted_proxies static 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16
+		client_ip_headers Cf-Connecting-Ip
+	}
+}
+
+(common) {
+	request_header X-Real-IP {http.request.header.Cf-Connecting-IP}
+	request_header X-Forwarded-For {http.request.header.Cf-Connecting-IP}
+
+	log {
+		output file /var/log/caddy/access.log
+		format json
+	}
+
+	header {
+		X-Frame-Options "SAMEORIGIN"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "no-referrer"
+		Strict-Transport-Security "max-age=31536000"
+	}
+}
+
+(localtls) {
+	tls /certs/_wildcard.waifu.land.pem /certs/_wildcard.waifu.land-key.pem
+}
+
+# ---------- enforce https on local
+
+http://waifu.land, http://*.waifu.land {
+	redir https://{host}{uri} permanent
+}
+
+# ---------- landing
+
+https://waifu.land {
+	import common
+	tls /certs/waifu.land.pem /certs/waifu.land-key.pem
+	respond /* "wattesigma" 200
+}
+
+# ---------- forgejo
+
+https://git.waifu.land {
+	import localtls
+	import common
+	reverse_proxy forgejo:3000
+}
+
+http://git.vinster.xyz {
+	import common
+	reverse_proxy forgejo:3000
+}
+
+# ---------- httpeak
+
+https://echo.waifu.land {
+	import localtls
+	import common
+	reverse_proxy httpeak:80
+}
+
+http://echo.vinster.xyz {
+	import common
+	reverse_proxy httpeak:80
+}
+
+# ---------- warpgate
+
+https://gateway.waifu.land {
+	import localtls
+	import common
+	reverse_proxy https://warpgate:8888 {
+		transport http {
+			tls_insecure_skip_verify
+		}
+	}
+}
+
+http://gateway.vinster.xyz {
+	import common
+	reverse_proxy https://warpgate:8888 {
+		transport http {
+			tls_insecure_skip_verify
+		}
+	}
+}
+
+# ---------- statping
+
+https://status.waifu.land {
+	import localtls
+	import common
+	reverse_proxy statping:8080
+}
+
+http://status.vinster.xyz {
+	import common
+	reverse_proxy statping:8080
+}
+
+# ---------- glance
+
+https://home.waifu.land {
+	import localtls
+	import common
+	reverse_proxy glance:80
+}
+
+http://home.vinster.xyz {
+	import common
+	reverse_proxy glance:80
+}
+
+# ------- jellyfin
+
+http://tv.vinster.xyz {
+	import common
+	reverse_proxy jellyfin:8096
+}
+
+https://tv.waifu.land {
+	import localtls
+	import common
+	reverse_proxy jellyfin:8096
+}
+
+# ---------- fixing missing subdomains
+
+https://*.waifu.land {
+	redir https://waifu.land temporary
+}
+
+http://*.vinster.xyz {
+	redir https://vinster.xyz temporary
+}

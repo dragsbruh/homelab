@@ -1,0 +1,16 @@
+services:
+  caddy:
+    image: caddy:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - 443:443/udp
+    volumes:
+      - ../../heap/caddy/data:/data/caddy
+      - ../../heap/caddy/config:/config/caddy
+      - ../../heap/caddy/certs:/certs
+      - ../../heap/caddy/logs:/var/log/caddy
+      - ./config:/etc/caddy
+    networks:
+      - public

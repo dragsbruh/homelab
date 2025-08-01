@@ -1,45 +1,13 @@
-services:
-  caddy:
-    extends:
-      file: ./apps/caddy/compose.yml
-      service: caddy
-  glance:
-    extends:
-      file: ./apps/glance/compose.yml
-      service: glance
-  navidrome:
-    extends:
-      file: ./apps/navidrome/compose.yml
-      service: navidrome
-  swingmusic:
-    extends:
-      file: ./apps/swing/compose.yml
-      service: swingmusic
-  cloudflared:
-    extends:
-      file: ./apps/cloudflared/compose.yml
-      service: cloudflared
-  filebrowser:
-    extends:
-      file: ./apps/filebrowser/compose.yml
-      service: filebrowser
-  forgejo:
-    extends:
-      file: ./apps/forgejo/compose.yml
-      service: forgejo
-  httpeak:
-    extends:
-      file: ./apps/httpeak/compose.yml
-      service: httpeak
-  jellyfin:
-    extends:
-      file: ./apps/jellyfin/compose.yml
-      service: jellyfin
-  goaccess:
-    extends:
-      file: ./apps/goaccess/compose.yml
-      service: goaccess
-
 networks:
-  homelab:
-    external: true
+  public: null
+  internal: null
+
+include:
+  - services/cloudflared.compose.yml
+  - services/jellyfin.compose.yml
+  - services/warpgate.compose.yml
+  - services/httpeak.compose.yml
+  - services/postgres/compose.yml
+  - services/forgejo/compose.yml
+  - services/glance/compose.yml
+  - services/caddy/compose.yml
