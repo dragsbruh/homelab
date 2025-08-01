@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface: #111;
+  --color-surface-alt: #222;
+  --color-typo: #eee;
+  --color-typo-muted: #888;
+  --color-lining: #334155;
+  --color-accent: #e879f9;
+  --color-accent-hover: #d946ef;
+}
+
+html,
+body,
+#root {
+  @apply w-full h-full bg-surface text-typo;
+}
