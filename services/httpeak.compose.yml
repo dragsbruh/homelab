@@ -1,5 +1,0 @@
-services:
-  httpeak:
-    image: ghcr.io/dragsbruh/httpeak:latest
-    networks:
-      - public

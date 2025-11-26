@@ -1,9 +1,12 @@
 services:
-  cloudflared:
+  tunnel:
     image: cloudflare/cloudflared:latest
     restart: unless-stopped
-    environment:
-      - TUNNEL_TOKEN=${CLOUDFLARED_TUNNEL_TOKEN}
+
     networks:
       - public
-    command: tunnel run
+
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN}
+
+    command: tunnel --no-autoupdate run

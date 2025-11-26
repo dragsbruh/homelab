@@ -1,0 +1,12 @@
+services:
+  httpeak:
+    image: ghcr.io/dragsbruh/httpeak:latest
+    restart: unless-stopped
+    networks:
+      - public
+
+  silitime:
+    image: ghcr.io/dragsbruh/silitime:latest
+    restart: unless-stopped
+    networks:
+      - public
