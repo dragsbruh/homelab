@@ -31,36 +31,36 @@ services:
     depends_on:
       - postgres
 
-  docker-in-docker:
-    image: docker:dind
-    restart: "unless-stopped"
-    privileged: "true"
-    command: ["dockerd", "-H", "tcp://0.0.0.0:2375", "--tls=false"]
-    networks:
-      - service
+  # docker-in-docker:
+  #   image: docker:dind
+  #   restart: "unless-stopped"
+  #   privileged: "true"
+  #   command: ["dockerd", "-H", "tcp://0.0.0.0:2375", "--tls=false"]
+  #   networks:
+  #     - service
 
-  forgejo-runner:
-    image: "data.forgejo.org/forgejo/runner:11"
-    restart: "unless-stopped"
+  # forgejo-runner:
+  #   image: "data.forgejo.org/forgejo/runner:11"
+  #   restart: "unless-stopped"
 
-    links:
-      - docker-in-docker
+  #   links:
+  #     - docker-in-docker
 
-    depends_on:
-      docker-in-docker:
-        condition: service_started
-      forgejo:
-        condition: service_started
+  #   depends_on:
+  #     docker-in-docker:
+  #       condition: service_started
+  #     forgejo:
+  #       condition: service_started
 
-    environment:
-      DOCKER_HOST: tcp://docker-in-docker:2375
+  #   environment:
+  #     DOCKER_HOST: tcp://docker-in-docker:2375
 
-    user: 1001:1001
+  #   user: 1001:1001
 
-    volumes:
-      - /srv/docker/volumes/forgejo/runner/data:/data
+  #   volumes:
+  #     - /srv/docker/volumes/forgejo/runner/data:/data
 
-    networks:
-      - service
+  #   networks:
+  #     - service
 
-    command: '/bin/sh -c "sleep 5; forgejo-runner daemon"'
+  #   command: '/bin/sh -c "sleep 5; forgejo-runner daemon"'
