@@ -35,6 +35,7 @@
 
 # ------------
 
+# temporary
 http://api.hearth.is-a.dev {
     import common
     reverse_proxy 100.64.10.10:80
@@ -79,6 +80,11 @@ http://shoko.tv.hearth.is-a.dev, https://shoko.tv.hoshino.ai {
 http://files.hearth.is-a.dev, https://files.hoshino.ai {
     import common
     reverse_proxy host.docker.internal:3939
+}
+
+http://tracking.hearth.is-a.dev, https://tracking.hoshino.ai {
+    import common
+    reverse_proxy umami:3000
 }
 
 :80, :443 {

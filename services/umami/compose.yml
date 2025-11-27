@@ -1,0 +1,11 @@
+services:
+  umami:
+    image: docker.umami.is/umami-software/umami:postgresql-latest
+    restart: unless-stopped
+
+    environment:
+      DATABASE_URL: "postgresql://umami:umami@postgres:5432/umami"
+
+    networks:
+      - public
+      - service

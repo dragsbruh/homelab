@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_MULTIPLE_DATABASES: forgejo,dev
+      POSTGRES_MULTIPLE_DATABASES: forgejo,umami,dev
 
     ports:
       - 5432:5432

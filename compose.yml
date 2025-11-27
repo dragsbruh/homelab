@@ -7,5 +7,6 @@ include:
   - services/postgres/compose.yml
   - services/forgejo/compose.yml
   - services/caddy/compose.yml
+  - services/umami/compose.yml
   - services/media/compose.yml
   - services/misc/compose.yml
