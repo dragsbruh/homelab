@@ -35,6 +35,11 @@
 
 # ------------
 
+http://api.hearth.is-a.dev {
+    import common
+    reverse_proxy 100.64.10.10:80
+}
+
 http://hearth.is-a.dev, https://hoshino.ai {
     import common
 

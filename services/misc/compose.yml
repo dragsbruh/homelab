@@ -10,3 +10,10 @@ services:
     restart: unless-stopped
     networks:
       - public
+
+  watchtower:
+    image: containrrr/watchtower:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --cleanup --interval 300
