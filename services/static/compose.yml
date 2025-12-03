@@ -1,0 +1,18 @@
+services:
+  silitime:
+    image: ghcr.io/dragsbruh/silitime:latest
+    restart: unless-stopped
+
+    networks:
+      - public
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.silitime.rule=Host(`silitime.hearth.land`)"
+      - "traefik.http.services.silitime.loadbalancer.server.port=8080"
+
+      - "traefik.http.routers.silitime-public.rule=Host(`silitime.hearth.is-a.dev`)"
+      - "traefik.http.routers.silitime-public.entryPoints=cloudflare"
+
+include:
+  - static.yml

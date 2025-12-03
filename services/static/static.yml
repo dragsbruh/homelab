@@ -1,0 +1,15 @@
+services:
+  static-hearth:
+    image: busybox:latest
+    restart: unless-stopped
+    volumes:
+      - /srv/config/static/@:/srv/http:ro
+    networks:
+      - public
+    command: ["httpd", "-f", "-p", "80", "-h", "/srv/http/"]
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.static-hearth.rule=Host(`hearth.land`)"
+      - "traefik.http.services.static-hearth.loadbalancer.server.port=80"
+      - "traefik.http.routers.static-hearth-public.rule=Host(`hearth.is-a.dev`)"
+      - "traefik.http.routers.static-hearth-public.entryPoints=cloudflare"

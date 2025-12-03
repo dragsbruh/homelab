@@ -10,4 +10,5 @@ include:
   - ./services/networking/compose.yml
   - ./services/tracking/compose.yml
   - ./services/storage/compose.yml
+  - ./services/static/compose.yml
   - ./services/dev/compose.yml
