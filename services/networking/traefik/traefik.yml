@@ -1,0 +1,56 @@
+# yaml-language-server: $schema=https://www.schemastore.org/traefik-v3.json
+
+api:
+  dashboard: true
+  insecure: true
+
+entryPoints:
+  web:
+    address: ":80"
+    asDefault: true
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+
+  websecure:
+    address: ":443"
+    asDefault: true
+    http:
+      tls:
+        certResolver: step
+
+  cloudflare:
+    address: ":90"
+    forwardedHeaders:
+      trustedIPs:
+        - 172.20.0.0/16
+    http:
+      middlewares:
+        - cloudflarewarp@file
+
+providers:
+  docker:
+    exposedByDefault: false
+
+  file:
+    directory: /etc/traefik
+    filename: dynamic.yml
+    watch: true
+
+certificatesResolvers:
+  step:
+    acme:
+      tlsChallenge: {}
+      email: admin
+      storage: /etc/acme/acme.json
+      caServer: https://step-ca/acme/acme/directory
+      certificatesDuration: 2160
+      httpChallenge:
+        entryPoint: web
+
+experimental:
+  plugins:
+    cloudflarewarp:
+      moduleName: "github.com/BetterCorp/cloudflarewarp"
+      version: "v1.3.3"

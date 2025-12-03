@@ -1,0 +1,19 @@
+services:
+  umami:
+    image: docker.umami.is/umami-software/umami:postgresql-latest
+    restart: unless-stopped
+
+    networks:
+      - public
+      - service
+
+    environment:
+      - DATABASE_URL=postgresql://umami:${UMAMI_PASSWORD}@postgres:5432/umami
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.umami.rule=Host(`tracking.hearth.land`)"
+      - "traefik.http.services.umami.loadbalancer.server.port=3000"
+
+      - "traefik.http.routers.umami-public.rule=Host(`tracking.hearth.is-a.dev`)"
+      - "traefik.http.routers.umami-public.entryPoints=cloudflare"

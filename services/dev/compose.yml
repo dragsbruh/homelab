@@ -1,0 +1,32 @@
+services:
+  forgejo:
+    image: codeberg.org/forgejo/forgejo:13
+    restart: unless-stopped
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - FORGEJO__database__DB_TYPE=postgres
+      - FORGEJO__database__HOST=postgres:5432
+      - FORGEJO__database__NAME=forgejo
+      - FORGEJO__database__USER=forgejo
+      - FORGEJO__database__PASSWD=${FORGEJO_PASSWORD}
+
+    networks:
+      - public
+      - service
+
+    volumes:
+      - /srv/volumes/forgejo/data:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+
+    depends_on:
+      - postgres
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.forgejo.rule=Host(`git.hearth.land`)"
+      - "traefik.http.services.forgejo.loadbalancer.server.port=3000"
+
+      - "traefik.http.routers.forgejo-public.rule=Host(`git.hearth.is-a.dev`)"
+      - "traefik.http.routers.forgejo-public.entryPoints=cloudflare"

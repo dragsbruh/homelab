@@ -1,0 +1,36 @@
+. {
+    view lan {
+        expr name() matches '^(.+\\.)?hearth\\.land\\.$' and incidr(client_ip(), '192.168.0.0/16')
+    }
+
+    template IN A {
+        answer "{{.Name}} 300 IN A 192.168.10.4"
+    }
+
+    template ANY ANY {
+        rcode NXDOMAIN
+    }
+
+    log
+}
+
+. {
+    view docker {
+        expr name() matches '^(.+\\.)?hearth\\.land\\.$' and incidr(client_ip(), '172.17.0.0/12')
+    }
+
+    template IN A {
+        answer "{{.Name}} 300 IN A 172.17.0.1"
+    }
+
+    template ANY ANY {
+        rcode NXDOMAIN
+    }
+
+    log
+}
+
+. {
+    forward . 1.1.1.1 9.9.9.9
+    log
+}

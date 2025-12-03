@@ -1,0 +1,8 @@
+http:
+  middlewares:
+    cloudflarewarp:
+      plugin:
+        cloudflarewarp:
+          disableDefault: true
+          trustip:
+            - 172.20.0.0/16

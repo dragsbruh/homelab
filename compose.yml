@@ -1,12 +1,13 @@
 networks:
   public:
   service:
+  cloudflare:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
 
 include:
-  - services/cloudflared/compose.yml
-  - services/postgres/compose.yml
-  - services/forgejo/compose.yml
-  - services/caddy/compose.yml
-  - services/umami/compose.yml
-  - services/media/compose.yml
-  - services/misc/compose.yml
+  - ./services/networking/compose.yml
+  - ./services/tracking/compose.yml
+  - ./services/storage/compose.yml
+  - ./services/dev/compose.yml
