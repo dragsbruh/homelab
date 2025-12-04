@@ -18,3 +18,24 @@ services:
 
     networks:
       - service
+
+  copyparty:
+    image: ghcr.io/9001/copyparty-ac:latest
+    restart: unless-stopped
+
+    hostname: hearth
+
+    networks:
+      - public
+
+    volumes:
+      - /data/personal:/w
+      - ./copyparty:/cfg
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.copyparty.rule=Host(`files.hearth.land`)"
+      - "traefik.http.services.copyparty.loadbalancer.server.port=3923"
+
+      - "traefik.http.routers.copyparty-public.rule=Host(`files.hearth.is-a.dev`)"
+      - "traefik.http.routers.copyparty-public.entryPoints=cloudflare"

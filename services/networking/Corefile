@@ -16,11 +16,11 @@
 
 . {
     view docker {
-        expr name() matches '^(.+\\.)?hearth\\.land\\.$' and incidr(client_ip(), '172.17.0.0/12')
+        expr name() matches '^(.+\\.)?hearth\\.land\\.$' and (incidr(client_ip(), '172.17.0.0/12') or incidr(client_ip(), '100.64.0.0/12'))
     }
 
     template IN A {
-        answer "{{.Name}} 300 IN A 172.17.0.1"
+        answer "{{.Name}} 300 IN A 100.64.1.1"
     }
 
     template ANY ANY {
