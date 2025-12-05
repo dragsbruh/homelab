@@ -42,9 +42,6 @@ services:
       - public
       - service
 
-    environment:
-      GF_SECURITY_ADMIN_PASSWORD: "changeme"
-
     volumes:
       - /srv/volumes/grafana:/var/lib/grafana
       - ./grafana.ini:/etc/grafana/grafana.ini
