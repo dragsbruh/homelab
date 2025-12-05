@@ -17,3 +17,54 @@ services:
 
       - "traefik.http.routers.umami-public.rule=Host(`tracking.hearth.is-a.dev`)"
       - "traefik.http.routers.umami-public.entryPoints=cloudflare"
+
+  prometheus:
+    image: prom/prometheus:latest
+    restart: unless-stopped
+
+    networks:
+      - service
+
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - /srv/volumes/prometheus/data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  grafana:
+    image: grafana/grafana:latest
+    restart: unless-stopped
+
+    networks:
+      - public
+      - service
+
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: "changeme"
+
+    volumes:
+      - /srv/volumes/grafana:/var/lib/grafana
+      - ./grafana.ini:/etc/grafana/grafana.ini
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.hearth.land`)"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+
+      - "traefik.http.routers.grafana-public.rule=Host(`grafana.hearth.is-a.dev`)"
+      - "traefik.http.routers.grafana-public.entryPoints=cloudflare"
+
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    restart: unless-stopped
+
+    network_mode: host
+    pid: host
+
+    command:
+      - "--path.rootfs=/host"
+    volumes:
+      - "/:/host:ro,rslave"

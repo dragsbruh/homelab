@@ -29,6 +29,7 @@ services:
 
     networks:
       - public
+      - service
       - cloudflare
 
   whoami:

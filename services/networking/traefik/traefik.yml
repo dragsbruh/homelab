@@ -29,6 +29,9 @@ entryPoints:
       middlewares:
         - cloudflarewarp@file
 
+  metrics:
+    address: ":8082"
+
 providers:
   docker:
     exposedByDefault: false
@@ -54,3 +57,10 @@ experimental:
     cloudflarewarp:
       moduleName: "github.com/BetterCorp/cloudflarewarp"
       version: "v1.3.3"
+
+metrics:
+  prometheus:
+    addRoutersLabels: true
+    entryPoint: metrics
+    headerLabels:
+      useragent: User-Agent
