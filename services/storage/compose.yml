@@ -29,7 +29,7 @@ services:
       - public
 
     volumes:
-      - /data/personal:/w
+      - /srv/personal:/w
       - ./copyparty:/cfg
 
     labels:

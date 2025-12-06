@@ -30,3 +30,43 @@ services:
 
       - "traefik.http.routers.forgejo-public.rule=Host(`git.hearth.is-a.dev`)"
       - "traefik.http.routers.forgejo-public.entryPoints=cloudflare"
+
+  docker-in-docker:
+    image: docker:dind
+    restart: "unless-stopped"
+
+    privileged: "true"
+    command: ["dockerd", "-H", "tcp://0.0.0.0:2375", "--tls=false"]
+
+    volumes:
+      - /etc/ssl/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+      - /usr/local/share/ca-certificates/hearth.crt:/usr/local/share/ca-certificates/hearth.crt:ro
+
+      - /srv/volumes/forgejo/runner/dind:/var/lib/docker
+
+    networks:
+      - service
+
+  forgejo-runner:
+    image: data.forgejo.org/forgejo/runner:11
+    restart: unless-stopped
+    user: 1001:1001
+
+    depends_on:
+      docker-in-docker:
+        condition: service_started
+
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+      - /usr/local/share/ca-certificates/hearth.crt:/usr/local/share/ca-certificates/hearth.crt:ro
+
+      - /srv/volumes/forgejo/runner/data:/data
+
+    environment:
+      DOCKER_HOST: tcp://docker-in-docker:2375
+
+    networks:
+      - service
+
+    command: bash -c 'sleep 1; forgejo-runner daemon -c config.yml'

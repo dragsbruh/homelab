@@ -30,6 +30,7 @@ services:
       - /srv/volumes/prometheus/data:/prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.retention.time=100y"
 
     extra_hosts:
       - "host.docker.internal:host-gateway"

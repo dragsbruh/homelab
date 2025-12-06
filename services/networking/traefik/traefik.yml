@@ -19,6 +19,10 @@ entryPoints:
     http:
       tls:
         certResolver: step
+    transport:
+      respondingTimeouts:
+        readTimeout: "0"
+        writeTimeout: "0"
 
   cloudflare:
     address: ":90"
@@ -28,6 +32,10 @@ entryPoints:
     http:
       middlewares:
         - cloudflarewarp@file
+    transport:
+      respondingTimeouts:
+        readTimeout: "0"
+        writeTimeout: "0"
 
   metrics:
     address: ":8082"

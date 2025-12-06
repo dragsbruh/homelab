@@ -19,3 +19,21 @@ services:
 
       - "traefik.http.routers.caache-public.rule=Host(`covers.hearth.is-a.dev`)"
       - "traefik.http.routers.caache-public.entryPoints=cloudflare"
+
+  watchtower:
+    image: nickfedor/watchtower:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: |
+      --interval=86400
+      --scope=none
+
+  watchtower-local:
+    image: nickfedor/watchtower:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: |
+      --interval=60
+      --scope=local
