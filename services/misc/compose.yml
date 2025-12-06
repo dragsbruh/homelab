@@ -1,0 +1,21 @@
+services:
+  caache:
+    image: ghcr.io/dragsbruh/caache:latest
+    restart: unless-stopped
+
+    volumes:
+      - /srv/volumes/caache/:/images
+
+    environment:
+      - IMAGES_DIR=/images
+
+    networks:
+      - public
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.caache.rule=Host(`covers.hearth.land`)"
+      - "traefik.http.services.caache.loadbalancer.server.port=80"
+
+      - "traefik.http.routers.caache-public.rule=Host(`covers.hearth.is-a.dev`)"
+      - "traefik.http.routers.caache-public.entryPoints=cloudflare"
