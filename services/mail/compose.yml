@@ -26,6 +26,9 @@ services:
       - AUTH=${MAIL_EDGE_AUTH}
       - CERTS_DIR=/certs/
 
+    networks:
+      - public
+
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.certy.rule=Host(`certy.hearth.land`)"
