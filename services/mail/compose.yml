@@ -1,0 +1,36 @@
+services:
+  certbot:
+    image: certbot/dns-cloudflare:latest
+    restart: unless-stopped
+    volumes:
+      - /srv/volumes/certs/certs:/certs
+      - /srv/volumes/certs/letsencrypt/etc:/etc/letsencrypt
+      - /srv/volumes/certs/letsencrypt/lib:/var/lib/letsencrypt
+      - ./cloudflare.ini:/cloudflare.ini:ro
+      - ./certbot.sh:/init.sh
+    environment:
+      - DOMAIN=hearth.is-a.dev
+      - EMAIL=dragsbruh@protonmail.com
+    entrypoint: /init.sh
+
+  certy:
+    image: git.hearth.land/dragsbruh/certy:latest
+    restart: unless-stopped
+
+    depends_on:
+      - certbot
+
+    volumes:
+      - /srv/volumes/certs/certs:/certs:ro
+    environment:
+      - AUTH=${MAIL_EDGE_AUTH}
+      - CERTS_DIR=/certs/
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.certy.rule=Host(`certy.hearth.land`)"
+      - "traefik.http.services.certy.loadbalancer.server.port=80"
+
+      - "traefik.http.routers.certy-public.rule=Host(`certy.hearth.is-a.dev`)"
+      - "traefik.http.routers.certy-public.entryPoints=cloudflare"
+      - "com.centurylinklabs.watchtower.scope=local"

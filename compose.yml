@@ -11,6 +11,6 @@ include:
   - ./services/tracking/compose.yml
   - ./services/storage/compose.yml
   - ./services/static/compose.yml
-  # - ./services/social/compose.yml # sekrit
   - ./services/misc/compose.yml
+  - ./services/mail/compose.yml
   - ./services/dev/compose.yml
