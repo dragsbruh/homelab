@@ -14,7 +14,7 @@ services:
       - "traefik.http.routers.silitime-public.rule=Host(`silitime.hearth.is-a.dev`)"
       - "traefik.http.routers.silitime-public.entryPoints=cloudflare"
 
-  landing:
+  landing: # FIXME: separate out to static repo and migrate to docker container
     image: busybox:latest
     restart: unless-stopped
     volumes:
@@ -28,3 +28,15 @@ services:
       - "traefik.http.services.static-hearth.loadbalancer.server.port=80"
       - "traefik.http.routers.static-hearth-public.rule=Host(`hearth.is-a.dev`)"
       - "traefik.http.routers.static-hearth-public.entryPoints=cloudflare"
+
+  syscalls:
+    build: ./syscalls/
+    restart: unless-stopped
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.syscalls.rule=Host(`syscalls.hearth.land`)"
+      - "traefik.http.services.syscalls.loadbalancer.server.port=80"
+      - "traefik.http.routers.syscalls-public.rule=Host(`syscalls.hearth.is-a.dev`)"
+      - "traefik.http.routers.syscalls-public.entryPoints=cloudflare"
