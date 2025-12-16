@@ -5,10 +5,11 @@
 
     template IN A {
         answer "{{.Name}} 300 IN A 192.168.10.4"
+        fallthrough
     }
 
     template ANY ANY {
-        rcode NXDOMAIN
+        fallthrough
     }
 
     log
@@ -21,10 +22,11 @@
 
     template IN A {
         answer "{{.Name}} 300 IN A 100.64.1.1"
+        fallthrough
     }
 
     template ANY ANY {
-        rcode NXDOMAIN
+        fallthrough
     }
 
     log

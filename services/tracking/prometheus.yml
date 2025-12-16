@@ -13,3 +13,10 @@ scrape_configs:
   - job_name: traefik
     static_configs:
       - targets: ["traefik:8082"]
+
+  - job_name: wakapi
+    scrape_interval: 1m
+    metrics_path: "/api/metrics"
+    bearer_token: "d2FrYV80MjYwMWY5My05NDk0LTQ5OWQtOGFmMC0zZWVkNGFiNmZjZjQK"
+    static_configs:
+      - targets: ["wakapi:3000"]

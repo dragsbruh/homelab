@@ -70,3 +70,36 @@ services:
       - service
 
     command: bash -c 'sleep 1; forgejo-runner daemon -c config.yml'
+
+  wakapi:
+    image: ghcr.io/muety/wakapi:2.16.1
+    restart: unless-stopped
+    init: true
+    environment:
+      TZ: Asia/Kolkata
+      ENVIRONMENT: prod
+      WAKAPI_LEADERBOARD_ENABLED: true
+      WAKAPI_PUBLIC_URL: https://waka.hearth.is-a.dev
+      WAKAPI_ALLOW_SIGNUP: false
+      WAKAPI_DISABLE_FRONTPAGE: true
+      WAKAPI_EXPOSE_METRICS: true
+      WAKAPI_DB_TYPE: postgres
+      WAKAPI_DB_NAME: wakapi
+      WAKAPI_DB_USER: wakapi
+      WAKAPI_DB_HOST: postgres
+      WAKAPI_DB_PORT: 5432
+
+      WAKAPI_DB_PASSWORD: ${WAKAPI_PASSWORD}
+      WAKAPI_PASSWORD_SALT: ${WAKAPI_PASSWORD_SALT}
+
+    networks:
+      - service
+      - public
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wakapi.rule=Host(`waka.hearth.land`)"
+      - "traefik.http.services.wakapi.loadbalancer.server.port=3000"
+
+      - "traefik.http.routers.wakapi-public.rule=Host(`waka.hearth.is-a.dev`)"
+      - "traefik.http.routers.wakapi-public.entryPoints=cloudflare"

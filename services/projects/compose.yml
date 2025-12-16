@@ -1,0 +1,20 @@
+services:
+  is-a-scam:
+    image: git.hearth.land/dragsbruh/is-a-scam:latest
+    restart: unless-stopped
+    command: --data-dir /data serve --addr :80
+    volumes:
+      - /srv/volumes/is-a-scam:/data
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.is-a-scam.rule=Host(`search.hearth.land`)"
+      - "traefik.http.services.is-a-scam.loadbalancer.server.port=80"
+
+      - "traefik.http.routers.is-a-scam-public.rule=Host(`search.hearth.is-a.dev`)"
+      - "traefik.http.routers.is-a-scam-public.entryPoints=cloudflare"
+
+      - "com.centurylinklabs.watchtower.scope=local"
+
+    networks:
+      - public

@@ -9,6 +9,7 @@ networks:
 include:
   - ./services/networking/compose.yml
   - ./services/tracking/compose.yml
+  - ./services/projects/compose.yml
   - ./services/storage/compose.yml
   - ./services/static/compose.yml
   - ./services/misc/compose.yml
