@@ -37,3 +37,20 @@ services:
     command: |
       --interval=60
       --scope=local
+
+  silverbullet:
+    image: ghcr.io/silverbulletmd/silverbullet:latest
+    restart: unless-stopped
+    environment:
+      - SB_USER=${SB_USER}
+    volumes:
+      - /srv/personal/dragsbruh/priv/wiki:/space
+    networks:
+      - public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.silverbullet.rule=Host(`wiki.hearth.land`)"
+      - "traefik.http.services.silverbullet.loadbalancer.server.port=3000"
+
+      - "traefik.http.routers.silverbullet-public.rule=Host(`wiki.hearth.is-a.dev`)"
+      - "traefik.http.routers.silverbullet-public.entryPoints=cloudflare"
